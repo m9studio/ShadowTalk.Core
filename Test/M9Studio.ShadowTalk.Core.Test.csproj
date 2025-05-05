@@ -1,24 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <OutputType>Exe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="M9Studio.ShadowTalk.Core.Test\**" />
-    <Compile Remove="Test\**" />
-    <EmbeddedResource Remove="M9Studio.ShadowTalk.Core.Test\**" />
-    <EmbeddedResource Remove="Test\**" />
-    <None Remove="M9Studio.ShadowTalk.Core.Test\**" />
-    <None Remove="Test\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="M9Studio.SecureStream" Version="8.0.0.1" />
     <PackageReference Include="M9Studio.UdpLikeTcp" Version="8.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="M9Studio.ShadowTalk.Core">
+      <HintPath>..\bin\Debug\net8.0\M9Studio.ShadowTalk.Core.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

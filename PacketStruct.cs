@@ -10,7 +10,7 @@ namespace M9Studio.ShadowTalk.Core
         {
             JObject jObject = new JObject();
 
-            var fields = GetType().GetFields(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
+            var fields = GetType().GetFields(BindingFlags.Public | BindingFlags.Instance);
 
             foreach (var field in fields)
             {

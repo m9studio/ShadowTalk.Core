@@ -6,18 +6,28 @@ namespace M9Studio.ShadowTalk.Core
 {
     public class UdpLikeTcpSecureTransportAdapter : ISecureTransportAdapter<IPEndPoint>
     {
-        private Socket _socket = new Socket();
+        private Socket _socket = new();
+        List<IPEndPoint> iPEndPoints = new();
 
         public event Action<IPEndPoint> OnConnected;
         public event Action<IPEndPoint> OnDisconnected;
 
-        public byte[] ReceiveFrom(IPEndPoint address)
+        public UdpLikeTcpSecureTransportAdapter()
         {
-            return _socket.ReceiveFrom(address);
+            _socket.OnPacketReceived += PacketReceived;
         }
-        public bool SendTo(byte[] buffer, IPEndPoint address)
+
+        private void PacketReceived(IPEndPoint sender, byte[] data)
         {
-            return _socket.SendTo(address, buffer);
+            if (iPEndPoints.Contains(sender))
+            {
+                return;
+            }
+            iPEndPoints.Add(sender);
+            OnConnected?.Invoke(sender);
         }
+
+        public byte[] ReceiveFrom(IPEndPoint address) => _socket.ReceiveFrom(address);
+        public bool SendTo(byte[] buffer, IPEndPoint address) => _socket.SendTo(address, buffer);
     }
 }

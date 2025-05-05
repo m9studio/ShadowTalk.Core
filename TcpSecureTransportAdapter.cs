@@ -4,22 +4,23 @@ using System.Net.Sockets;
 
 namespace M9Studio.ShadowTalk.Core
 {
-    internal class TcpSecureTransportAdapter : ISecureTransportAdapter<IPEndPoint>
+    public class TcpSecureTransportAdapter : ISecureTransportAdapter<IPEndPoint>
     {
-        private Socket _socket;
+        protected Socket _socket;
         public event Action<IPEndPoint>? OnConnected;
         public event Action<IPEndPoint>? OnDisconnected;
 
-        public TcpSecureTransportAdapter(Socket socket)
-        {
-            _socket = socket;
-        }
+        public TcpSecureTransportAdapter(Socket socket) => _socket = socket;
+        public virtual byte[] ReceiveFrom(IPEndPoint address) => ReceiveFrom(_socket);
+        public virtual bool SendTo(byte[] buffer, IPEndPoint address) => SendTo(buffer, _socket);
+        protected void RaiseConnected(IPEndPoint endpoint) => OnConnected?.Invoke(endpoint);
 
-        public byte[] ReceiveFrom(IPEndPoint address)
+
+        protected byte[] ReceiveFrom(Socket socket)
         {
             byte[] sizeBuffer = new byte[4];
 
-            int received = _socket.Receive(sizeBuffer);
+            int received = socket.Receive(sizeBuffer);
             if (received != 4)
                 throw new Exception("Не удалось получить размер сообщения");
 
@@ -33,10 +34,10 @@ namespace M9Studio.ShadowTalk.Core
 
             while (totalReceived < size)
             {
-                int bytes = _socket.Receive(buffer, totalReceived, (int)size - totalReceived, SocketFlags.None);
+                int bytes = socket.Receive(buffer, totalReceived, (int)size - totalReceived, SocketFlags.None);
                 if (bytes == 0) // Если соединение закрылось
                 {
-                    OnDisconnected?.Invoke((IPEndPoint)_socket.LocalEndPoint);
+                    OnDisconnected?.Invoke((IPEndPoint)socket.LocalEndPoint);
                     throw new Exception("Соединение было закрыто");
                 }
                 totalReceived += bytes;
@@ -44,7 +45,7 @@ namespace M9Studio.ShadowTalk.Core
             return buffer;
         }
 
-        public bool SendTo(byte[] buffer, IPEndPoint address)
+        protected bool SendTo(byte[] buffer, Socket socket)
         {
             byte[] size = BitConverter.GetBytes((uint)buffer.Length);
             if (BitConverter.IsLittleEndian)
@@ -55,7 +56,7 @@ namespace M9Studio.ShadowTalk.Core
 
             try
             {
-                _socket.Send(message);
+                socket.Send(message);
             }
             catch (Exception ex)
             {
@@ -63,5 +64,6 @@ namespace M9Studio.ShadowTalk.Core
             }
             return true;
         }
+
     }
 }

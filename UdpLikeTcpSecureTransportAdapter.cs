@@ -4,7 +4,7 @@ using System.Net;
 
 namespace M9Studio.ShadowTalk.Core
 {
-    internal class UdpLikeTcpSecureTransportAdapter : ISecureTransportAdapter<IPEndPoint>
+    public class UdpLikeTcpSecureTransportAdapter : ISecureTransportAdapter<IPEndPoint>
     {
         private Socket _socket = new Socket();
 

@@ -6,6 +6,5 @@
         public string Name;
         public string Salt;
         public string B;
-        public string Session;
     }
 }

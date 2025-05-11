@@ -8,7 +8,10 @@ namespace M9Studio.ShadowTalk.Core
         public override string ToString() => ToJObject().ToString();
         public JObject ToJObject()
         {
-            JObject jObject = new JObject();
+            JObject jObject = new JObject
+            {
+                ["struct"] = GetType().Name
+            };
 
             var fields = GetType().GetFields(BindingFlags.Public | BindingFlags.Instance);
 
@@ -23,6 +26,14 @@ namespace M9Studio.ShadowTalk.Core
 
         public static T Parse<T>(JObject jObject) where T : PacketStruct, new()
         {
+            string expectedStruct = typeof(T).Name;
+            string actualStruct = jObject["struct"]?.ToString();
+
+            if (actualStruct != expectedStruct)
+                throw new InvalidOperationException($"Expected struct '{expectedStruct}', but got '{actualStruct}'.");
+
+
+
             T instance = new T();
             var fields = typeof(T).GetFields(BindingFlags.Public | BindingFlags.Instance);
 

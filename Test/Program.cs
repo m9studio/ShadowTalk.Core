@@ -14,6 +14,8 @@ namespace M9Studio.ShadowTalk.Core.Test
 
             obj["demo"] = 12345;
 
+            //obj["struct"] = 12345;
+
             PacketStruct test2 = PacketStruct.Parse<TestPacketStruct>(obj);
             if (test2 != null)
             {

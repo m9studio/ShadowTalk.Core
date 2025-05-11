@@ -17,7 +17,15 @@ namespace M9Studio.ShadowTalk.Core
                 RaiseConnected(iPEndPoint);
             }
         }
-
+        public void Disconect(IPEndPoint address)
+        {
+            if (sockets.ContainsKey(address))
+            {
+                sockets[address].Close();
+                sockets.Remove(address);
+                RaiseDisconect(address);
+            }
+        }
         public override byte[] ReceiveFrom(IPEndPoint address) => ReceiveFrom(sockets[address]);
         public override bool SendTo(byte[] buffer, IPEndPoint address) => SendTo(buffer, sockets[address]);
     }

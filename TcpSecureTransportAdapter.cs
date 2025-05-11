@@ -10,10 +10,12 @@ namespace M9Studio.ShadowTalk.Core
         public event Action<IPEndPoint>? OnConnected;
         public event Action<IPEndPoint>? OnDisconnected;
 
+
         public TcpSecureTransportAdapter(Socket socket) => _socket = socket;
         public virtual byte[] ReceiveFrom(IPEndPoint address) => ReceiveFrom(_socket);
         public virtual bool SendTo(byte[] buffer, IPEndPoint address) => SendTo(buffer, _socket);
-        protected void RaiseConnected(IPEndPoint endpoint) => OnConnected?.Invoke(endpoint);
+        protected void RaiseConnected(IPEndPoint address) => OnConnected?.Invoke(address);
+        protected void RaiseDisconect(IPEndPoint address) => OnDisconnected?.Invoke(address);
 
 
         protected byte[] ReceiveFrom(Socket socket)

@@ -4,5 +4,6 @@
     {
         public string A;
         public string M1;
+        public string RSA;
     }
 }

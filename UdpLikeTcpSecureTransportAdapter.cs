@@ -12,14 +12,10 @@ namespace M9Studio.ShadowTalk.Core
         public event Action<IPEndPoint> OnConnected;
         public event Action<IPEndPoint> OnDisconnected;
 
-        public UdpLikeTcpSecureTransportAdapter() => _socket.OnPacketReceived += PacketReceived;
+        public UdpLikeTcpSecureTransportAdapter() => _socket.OnConnected += Connected;
 
-        private void PacketReceived(IPEndPoint sender, byte[] data)
+        private void Connected(IPEndPoint sender)
         {
-            if (iPEndPoints.Contains(sender))
-            {
-                return;
-            }
             iPEndPoints.Add(sender);
             OnConnected?.Invoke(sender);
         }

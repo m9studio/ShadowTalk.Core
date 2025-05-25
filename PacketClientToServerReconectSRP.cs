@@ -5,5 +5,6 @@
         public string Token;
         public string HMAC;
         public string A;
+        public int Port;
     }
 }

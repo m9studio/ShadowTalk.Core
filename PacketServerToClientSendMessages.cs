@@ -4,8 +4,7 @@
     {
         //TODO messages[{id:"", uuid:"", key:"", text:""}..]
         public string[] UUIDs;
-        public int[] Ids;
-        public string[] Keys;
+        public int[] Users;
         public string[] Texts;
     }
 }

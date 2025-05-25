@@ -2,8 +2,8 @@
 {
     public class PacketClientToServerSendMessage : PacketStruct
     {
+        public int Id;
         public string Text;
-        public string Key;
         public string UUID;
     }
 }

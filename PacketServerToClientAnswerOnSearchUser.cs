@@ -1,9 +1,11 @@
 ﻿namespace M9Studio.ShadowTalk.Core
 {
-    public class PacketServerToClientAnswerOnSearchUser
+    public class PacketServerToClientAnswerOnSearchUser : PacketStruct
     {
         //TODO Users[{Id:"",Name:""},..]
         public string[] Names;
-        public string[] Ids;
+        public string[] RSAs;
+        public int[] Ids;
+        public bool[] Online;
     }
 }

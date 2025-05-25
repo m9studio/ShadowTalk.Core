@@ -6,7 +6,7 @@
     public class PacketServerToClientRequestOnConnectP2P : PacketStruct
     {
         public int UserId;
-        public int UserName;
+        public string UserName;
         public string Key;
         public string Ip;
         public int Port;

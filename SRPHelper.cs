@@ -72,5 +72,26 @@ namespace M9Studio.ShadowTalk.Core
             byte[] hash = hmac.ComputeHash(inputBytes);
             return Convert.ToHexString(hash);
         }
+
+
+
+
+        public static (BigInteger a, string A_hex) GenerateA()
+        {
+            // Получаем SRP-константы (N и g должны совпадать с сервером)
+            BigInteger N = SRPConstants.N;
+            BigInteger g = SRPConstants.g;
+
+            // Генерируем a (приватное случайное значение)
+            byte[] aBytes = new byte[32];
+            RandomNumberGenerator.Fill(aBytes);
+            BigInteger a = new BigInteger(aBytes, isUnsigned: true, isBigEndian: true);
+
+            // Вычисляем A = g^a mod N
+            BigInteger A = BigInteger.ModPow(g, a, N);
+
+            // Возвращаем и A (hex-строку для отправки), и a (для вычисления K позже)
+            return (a, A.ToString("X"));
+        }
     }
 }

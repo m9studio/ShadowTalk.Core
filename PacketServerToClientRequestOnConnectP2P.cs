@@ -9,6 +9,7 @@
         public string UserName;
         public string Key;
         public string Ip;
+        public string RSA;
         public int Port;
     }
 }

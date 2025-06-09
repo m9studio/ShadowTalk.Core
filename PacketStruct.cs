@@ -48,5 +48,21 @@ namespace M9Studio.ShadowTalk.Core
 
             return instance;
         }
+    
+    
+        public static T TryParse<T>(JObject jObject) where T : PacketStruct, new()
+        {
+            try
+            {
+                return Parse<T>(jObject);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+
+
     }
 }

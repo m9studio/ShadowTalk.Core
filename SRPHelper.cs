@@ -68,9 +68,8 @@ namespace M9Studio.ShadowTalk.Core
         public static string ComputeHMAC(byte[] key, string message)
         {
             using var hmac = new HMACSHA256(key);
-            byte[] inputBytes = Encoding.UTF8.GetBytes(message);
-            byte[] hash = hmac.ComputeHash(inputBytes);
-            return Convert.ToHexString(hash);
+            var bytes = Encoding.UTF8.GetBytes(message);
+            return Convert.ToHexString(hmac.ComputeHash(bytes));
         }
 
 

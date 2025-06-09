@@ -12,7 +12,7 @@ namespace M9Studio.ShadowTalk.Core
             while (true)
             {
                 Socket newSocket = await _socket.AcceptAsync();
-                IPEndPoint iPEndPoint = (IPEndPoint)newSocket.LocalEndPoint;
+                IPEndPoint iPEndPoint = (IPEndPoint)newSocket.RemoteEndPoint;
                 sockets.Add(iPEndPoint, newSocket);
                 RaiseConnected(iPEndPoint);
             }

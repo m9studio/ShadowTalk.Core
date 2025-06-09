@@ -14,12 +14,9 @@ namespace M9Studio.ShadowTalk.Core
         public static bool Send<TAddress>(this SecureSession<TAddress> session, PacketStruct @struct) => session.Send(@struct.ToJObject());
         public static byte[] ToByteArrayUnsigned(this BigInteger value)
         {
-            byte[] bytes = value.ToByteArray();
-            if (bytes[^1] == 0) // Удаляем знак, если есть
-            {
-                Array.Resize(ref bytes, bytes.Length - 1);
-            }
-            return bytes;
+
+            return value.ToByteArray(isUnsigned: true, isBigEndian: true);
         }
+
     }
 }

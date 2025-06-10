@@ -6,7 +6,7 @@ namespace M9Studio.ShadowTalk.Core
 {
     public class UdpLikeTcpSecureTransportAdapter : ISecureTransportAdapter<IPEndPoint>
     {
-        private Socket _socket = new();
+        public Socket _socket = new();
         List<IPEndPoint> iPEndPoints = new();
 
         public event Action<IPEndPoint> OnConnected;

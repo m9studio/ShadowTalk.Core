@@ -2,5 +2,6 @@
 {
     public class PacketServerToClientErrorP2P : PacketStruct
     {
+        public int Id;
     }
 }
